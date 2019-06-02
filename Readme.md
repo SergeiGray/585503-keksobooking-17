@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Сергей Бутримов](https://up.htmlacademy.ru/javascript/17/user/585503).
-* Наставник: `Олег Скляров`.
+* Наставник: `Олег Скляров` (https://htmlacademy.ru/profile/id926687).
 
 ---
 
