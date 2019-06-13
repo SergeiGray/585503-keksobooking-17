@@ -12,73 +12,29 @@
     var mapPinsHeightMax = 630;
     var offerTypeVariants = ['palace', 'flat', 'house', 'bungalo'];
     var map = document.querySelector('.map');
-    var titleAdvertisements = {palace: 'Сдам роскошный особняк для роскошной жизни роскошных господ.', flat: 'Cдам комнату студенту Токийского Технического Университета.', house: 'Сдам небольшой дом для семейных пар с детьми и собаками.', bungalo: 'Сдается бунгало. Немного протекает крыша, нет санузла и кухни, в соседнем бунгало живут наркоманы, но в целом место уютное.'};
+    var titleAdvertisements = ['Заголовок 1', 'Заголовок 2', 'Заголовок 3', 'Заголовок 4', 'Заголовок 5', 'Заголовок 6', 'Заголовок 7', 'Заголовок 8'];
 
     map.classList.remove('map--faded');
 
-    var getAvatarVariants = function (lengthArr) {
-      var r = [];
-      for (var i = 1; i < lengthArr + 1; i++) {
-        r.push(i);
+    var getRandomNumber = function (max, min) {
+      if (min === undefined) {
+        min = 0;
       }
-      return r;
-    }(NUMBER_OF_OBJECTS);
-
-    var shuffle = function (arr, variant) {
-      if (variant === 'avatar') {
-        for (var i = arr.length; i; i--) {
-          var j;
-          var x;
-          j = parseInt((Math.random() * i), 10);
-          x = arr[--i];
-          arr[i] = arr[j];
-          arr[j] = x;
-        }
-      }
-      if (variant === 'offerType') {
-        var arrCopy = arr;
-        for (var k = 0; k < NUMBER_OF_OBJECTS; k++) {
-          arr[k] = arrCopy[Math.floor(Math.random() * arrCopy.length)];
-        }
-      }
-      return arr;
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     };
 
-    var getTitleAdvertisements = function (arrTypes, objTitle) {
-      var arrTitles = [];
-      for (var i = 0; i < arrTypes.length; i++) {
-        for (var key in objTitle) {
-          if (arrTypes[i] === key) {
-            arrTitles[i] = objTitle[key];
-          }
-        }
-      }
-
-      return arrTitles;
-    };
-
-    var shuffleAvatars = shuffle(getAvatarVariants, 'avatar');
-    var shuffleOfferTypes = shuffle(offerTypeVariants, 'offerType');
-    var shuffleTitleAdvertisements = getTitleAdvertisements(shuffleOfferTypes, titleAdvertisements);
-    var coordinateX = function (width) {
-      return Math.floor(Math.random() * width);
-    };
-    var coordinateY = function (heightMin, heightMax) {
-      return Math.floor(Math.random() * (heightMax - heightMin + 1)) + heightMin;
-    };
-
-    for (var i = 0; i < getAvatarVariants.length; i++) {
+    for (var i = 0; i < NUMBER_OF_OBJECTS; i++) {
       advertisements[i] = {
         author: {
-          avatar: 'img/avatars/user0' + shuffleAvatars[i] + '.png'
+          avatar: 'img/avatars/user0' + (i + 1) + '.png'
         },
         offer: {
-          type: shuffleOfferTypes[i],
-          title: shuffleTitleAdvertisements[i]
+          type: offerTypeVariants[getRandomNumber(offerTypeVariants.length - 1)],
+          title: titleAdvertisements[getRandomNumber(titleAdvertisements.length - 1)]
         },
         location: {
-          x: coordinateX(mapPinsWidth),
-          y: coordinateY(mapPinsHeightMin, mapPinsHeightMax)
+          x: getRandomNumber(mapPinsWidth),
+          y: getRandomNumber(mapPinsHeightMax, mapPinsHeightMin)
         }
       };
     }
