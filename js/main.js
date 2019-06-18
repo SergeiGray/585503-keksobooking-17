@@ -2,7 +2,20 @@
 
 (function () {
   var advertisements = [];
+  var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
+  var mapPinMain = document.querySelector('.map__pin--main');
+  var mapFilters = document.querySelector('.map__filters');
+  var adForm = document.querySelector('.ad-form');
+  var adFormAddress = adForm.querySelector('#address');
+
+  var mapSelectFilters = mapFilters.querySelectorAll('select');
+  var mapInputFilters = mapFilters.querySelectorAll('input');
+  var mapFieldsetFilters = mapFilters.querySelectorAll('fieldset');
+  var mapSelectAdForm = adForm.querySelectorAll('select');
+  var mapInputAdForm = adForm.querySelectorAll('input');
+  var mapFieldsetAdForm = adForm.querySelectorAll('fieldset');
+  var formsElements = [mapSelectFilters, mapInputFilters, mapFieldsetFilters, mapSelectAdForm, mapInputAdForm, mapFieldsetAdForm];
 
   var getRandomNumber = function (max, min) {
     if (min === undefined) {
@@ -17,9 +30,6 @@
     var mapPinsHeightMin = 130;
     var mapPinsHeightMax = 630;
     var offerTypeVariants = ['palace', 'flat', 'house', 'bungalo'];
-    var map = document.querySelector('.map');
-
-    map.classList.remove('map--faded');
 
     for (var i = 0; i < NUMBER_OF_OBJECTS; i++) {
       advertisements[i] = {
@@ -51,7 +61,40 @@
     }
   };
 
-  generateAdvertisementMock();
-  doDomElements();
+  var functionElementAppend = function (arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+      for (var j = 0; j < arr[i].length; j++) {
+        arr[i][j].disabled = value;
+      }
+    }
+
+  };
+
+  var inactivationPage = function () {
+
+    functionElementAppend(formsElements, true);
+  };
+
+  var activationPage = function () {
+
+    var showMapHandler = function () {
+      map.classList.remove('map--faded');
+      generateAdvertisementMock();
+      doDomElements();
+      adForm.classList.remove('ad-form--disabled');
+      functionElementAppend(formsElements, false);
+    };
+
+    var writeСoordinatesHandler = function () {
+      var pinСoordinates = mapPinMain.getBoundingClientRect();
+      adFormAddress.value = Math.round(pinСoordinates.top + pageYOffset) + '.' + Math.round(pinСoordinates.left + pageXOffset);
+    };
+
+    mapPinMain.addEventListener('click', showMapHandler);
+    mapPinMain.addEventListener('mouseup', writeСoordinatesHandler);
+  };
+
+  inactivationPage();
+  activationPage();
 
 })();
