@@ -15,7 +15,7 @@
   var mapSelectAdForm = adForm.querySelectorAll('select');
   var mapInputAdForm = adForm.querySelectorAll('input');
   var mapFieldsetAdForm = adForm.querySelectorAll('fieldset');
-  var formsElements = [mapSelectFilters, mapInputFilters, mapFieldsetFilters, mapSelectAdForm, mapInputAdForm, mapFieldsetAdForm];
+  var formElements = [mapSelectFilters, mapInputFilters, mapFieldsetFilters, mapSelectAdForm, mapInputAdForm, mapFieldsetAdForm];
 
   var getRandomNumber = function (max, min) {
     if (min === undefined) {
@@ -61,40 +61,40 @@
     }
   };
 
-  var functionElementAppend = function (arr, value) {
-    for (var i = 0; i < arr.length; i++) {
-      for (var j = 0; j < arr[i].length; j++) {
-        arr[i][j].disabled = value;
+  var updateFormElementsState = function (forms, isDisabled) {
+    for (var i = 0; i < forms.length; i++) {
+      for (var j = 0; j < forms[i].length; j++) {
+        forms[i][j].disabled = isDisabled;
       }
     }
 
   };
 
-  var inactivationPage = function () {
+  var disablePage = function () {
 
-    functionElementAppend(formsElements, true);
+    updateFormElementsState(formElements, true);
   };
 
-  var activationPage = function () {
+  var enablePage = function () {
 
     var showMapHandler = function () {
       map.classList.remove('map--faded');
       generateAdvertisementMock();
       doDomElements();
       adForm.classList.remove('ad-form--disabled');
-      functionElementAppend(formsElements, false);
+      updateFormElementsState(formElements, false);
     };
 
-    var writeСoordinatesHandler = function () {
-      var pinСoordinates = mapPinMain.getBoundingClientRect();
-      adFormAddress.value = Math.round(pinСoordinates.top + pageYOffset) + '.' + Math.round(pinСoordinates.left + pageXOffset);
+    var writeCoordinatesHandler = function () {
+      var pinCoordinates = mapPinMain.getBoundingClientRect();
+      adFormAddress.value = Math.round(pinCoordinates.top + pageYOffset) + '.' + Math.round(pinCoordinates.left + pageXOffset);
     };
 
     mapPinMain.addEventListener('click', showMapHandler);
-    mapPinMain.addEventListener('mouseup', writeСoordinatesHandler);
+    mapPinMain.addEventListener('mouseup', writeCoordinatesHandler);
   };
 
-  inactivationPage();
-  activationPage();
+  disablePage();
+  enablePage();
 
 })();
