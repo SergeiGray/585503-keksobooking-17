@@ -8,6 +8,10 @@
   var mapFilters = document.querySelector('.map__filters');
   var adForm = document.querySelector('.ad-form');
   var adFormAddress = adForm.querySelector('#address');
+  var adFormHousingType = adForm.querySelector('#type');
+  var adFormPrice = adForm.querySelector('#price');
+  var adFormTimeIn = adForm.querySelector('#timein');
+  var adFormTimeOut = adForm.querySelector('#timeout');
 
   var mapSelectFilters = mapFilters.querySelectorAll('select');
   var mapInputFilters = mapFilters.querySelectorAll('input');
@@ -94,7 +98,49 @@
     mapPinMain.addEventListener('mouseup', writeCoordinatesHandler);
   };
 
+  var doDependencePriceOfType = function () {
+    adFormHousingType.addEventListener('change', function (evt) {
+      if (evt.target.value === 'bungalo') {
+        adFormPrice.setAttribute('min', 0);
+      }
+      if (evt.target.value === 'flat') {
+        adFormPrice.setAttribute('min', 1000);
+      }
+      if (evt.target.value === 'house') {
+        adFormPrice.setAttribute('min', 5000);
+      }
+      if (evt.target.value === 'palace') {
+        adFormPrice.setAttribute('min', 10000);
+      }
+    });
+  };
+
+  var doDependenceTimeOfDeparture = function () {
+    adFormTimeIn.addEventListener('change', function (evt) {
+      var adFormTimeOutOptions = adFormTimeOut.options;
+      var adFormTimeInValue = evt.target.value;
+
+      for (var i = 0; i < adFormTimeOutOptions.length; i++) {
+        if (adFormTimeInValue === adFormTimeOutOptions[i].value) {
+          adFormTimeOutOptions[i].selected = true;
+        }
+      }
+    });
+    adFormTimeOut.addEventListener('change', function (evt) {
+      var adFormTimeInOptions = adFormTimeIn.options;
+      var adFormTimeOutValue = evt.target.value;
+
+      for (var i = 0; i < adFormTimeInOptions.length; i++) {
+        if (adFormTimeOutValue === adFormTimeInOptions[i].value) {
+          adFormTimeInOptions[i].selected = true;
+        }
+      }
+    });
+  };
+
   disablePage();
   enablePage();
+  doDependencePriceOfType();
+  doDependenceTimeOfDeparture();
 
 })();
