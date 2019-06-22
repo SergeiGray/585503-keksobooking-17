@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var HOUSE_TYPE_MIN_PRICES = {'bungalo': 0, 'flat': 1000, 'house': 5000, 'palace': 10000};
   var advertisements = [];
   var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
@@ -98,49 +99,23 @@
     mapPinMain.addEventListener('mouseup', writeCoordinatesHandler);
   };
 
-  var doDependencePriceOfType = function () {
-    adFormHousingType.addEventListener('change', function (evt) {
-      if (evt.target.value === 'bungalo') {
-        adFormPrice.setAttribute('min', 0);
-      }
-      if (evt.target.value === 'flat') {
-        adFormPrice.setAttribute('min', 1000);
-      }
-      if (evt.target.value === 'house') {
-        adFormPrice.setAttribute('min', 5000);
-      }
-      if (evt.target.value === 'palace') {
-        adFormPrice.setAttribute('min', 10000);
-      }
-    });
+  var syncHousingTypeAndPrice = function (evt) {
+    adFormPrice.setAttribute('min', HOUSE_TYPE_MIN_PRICES[evt.target.value]);
+    adFormPrice.setAttribute('placeholder', HOUSE_TYPE_MIN_PRICES[evt.target.value]);
   };
 
-  var doDependenceTimeOfDeparture = function () {
-    adFormTimeIn.addEventListener('change', function (evt) {
-      var adFormTimeOutOptions = adFormTimeOut.options;
-      var adFormTimeInValue = evt.target.value;
-
-      for (var i = 0; i < adFormTimeOutOptions.length; i++) {
-        if (adFormTimeInValue === adFormTimeOutOptions[i].value) {
-          adFormTimeOutOptions[i].selected = true;
-        }
-      }
-    });
-    adFormTimeOut.addEventListener('change', function (evt) {
-      var adFormTimeInOptions = adFormTimeIn.options;
-      var adFormTimeOutValue = evt.target.value;
-
-      for (var i = 0; i < adFormTimeInOptions.length; i++) {
-        if (adFormTimeOutValue === adFormTimeInOptions[i].value) {
-          adFormTimeInOptions[i].selected = true;
-        }
-      }
-    });
+  var syncTimeInAndTimeOut = function (evt) {
+    if (evt.target.name === 'timein') {
+      adFormTimeOut.value = evt.target.value;
+    } else {
+      adFormTimeIn.value = evt.target.value;
+    }
   };
 
   disablePage();
   enablePage();
-  doDependencePriceOfType();
-  doDependenceTimeOfDeparture();
 
+  adFormHousingType.addEventListener('change', syncHousingTypeAndPrice);
+  adFormTimeIn.addEventListener('change', syncTimeInAndTimeOut);
+  adFormTimeOut.addEventListener('change', syncTimeInAndTimeOut);
 })();
