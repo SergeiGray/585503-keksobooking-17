@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var HOUSE_TYPE_MIN_PRICES = {'bungalo': 0, 'flat': 1000, 'house': 5000, 'palace': 10000};
   var advertisements = [];
   var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
@@ -8,6 +9,10 @@
   var mapFilters = document.querySelector('.map__filters');
   var adForm = document.querySelector('.ad-form');
   var adFormAddress = adForm.querySelector('#address');
+  var adFormHousingType = adForm.querySelector('#type');
+  var adFormPrice = adForm.querySelector('#price');
+  var adFormTimeIn = adForm.querySelector('#timein');
+  var adFormTimeOut = adForm.querySelector('#timeout');
 
   var mapSelectFilters = mapFilters.querySelectorAll('select');
   var mapInputFilters = mapFilters.querySelectorAll('input');
@@ -94,7 +99,23 @@
     mapPinMain.addEventListener('mouseup', writeCoordinatesHandler);
   };
 
+  var syncHousingTypeAndPrice = function (evt) {
+    adFormPrice.setAttribute('min', HOUSE_TYPE_MIN_PRICES[evt.target.value]);
+    adFormPrice.setAttribute('placeholder', HOUSE_TYPE_MIN_PRICES[evt.target.value]);
+  };
+
+  var syncTimeInAndTimeOut = function (evt) {
+    if (evt.target.name === 'timein') {
+      adFormTimeOut.value = evt.target.value;
+    } else {
+      adFormTimeIn.value = evt.target.value;
+    }
+  };
+
   disablePage();
   enablePage();
 
+  adFormHousingType.addEventListener('change', syncHousingTypeAndPrice);
+  adFormTimeIn.addEventListener('change', syncTimeInAndTimeOut);
+  adFormTimeOut.addEventListener('change', syncTimeInAndTimeOut);
 })();
