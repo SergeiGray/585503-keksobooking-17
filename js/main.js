@@ -13,6 +13,7 @@
   var adFormPrice = adForm.querySelector('#price');
   var adFormTimeIn = adForm.querySelector('#timein');
   var adFormTimeOut = adForm.querySelector('#timeout');
+  var firstDiscovery = true;
 
   var mapSelectFilters = mapFilters.querySelectorAll('select');
   var mapInputFilters = mapFilters.querySelectorAll('input');
@@ -80,25 +81,6 @@
     updateFormElementsState(formElements, true);
   };
 
-  var enablePage = function () {
-
-    var showMapHandler = function () {
-      map.classList.remove('map--faded');
-      generateAdvertisementMock();
-      doDomElements();
-      adForm.classList.remove('ad-form--disabled');
-      updateFormElementsState(formElements, false);
-    };
-
-    var writeCoordinatesHandler = function () {
-      var pinCoordinates = mapPinMain.getBoundingClientRect();
-      adFormAddress.value = Math.round(pinCoordinates.top + pageYOffset) + '.' + Math.round(pinCoordinates.left + pageXOffset);
-    };
-
-    mapPinMain.addEventListener('click', showMapHandler);
-    mapPinMain.addEventListener('mouseup', writeCoordinatesHandler);
-  };
-
   var syncHousingTypeAndPrice = function (evt) {
     adFormPrice.setAttribute('min', HOUSE_TYPE_MIN_PRICES[evt.target.value]);
     adFormPrice.setAttribute('placeholder', HOUSE_TYPE_MIN_PRICES[evt.target.value]);
@@ -112,8 +94,49 @@
     }
   };
 
+  var moveMapPinMain = function () {
+
+    mapPinMain.addEventListener('mousedown', function (evt) {
+      var startCoords = {x: evt.clientX, y: evt.clientY};
+
+      var handleMouseMove = function (moveEvt) {
+        var shiftPinMain = {x: startCoords.x - moveEvt.clientX, y: startCoords.y - moveEvt.clientY};
+        startCoords = {x: moveEvt.clientX, y: moveEvt.clientY};
+        mapPinMain.style.top = (mapPinMain.offsetTop - shiftPinMain.y) + 'px';
+        mapPinMain.style.left = (mapPinMain.offsetLeft - shiftPinMain.x) + 'px';
+      };
+
+      var handleMouseUp = function () {
+        mapPinMain.removeEventListener('mousemove', handleMouseMove);
+        mapPinMain.removeEventListener('mouseup', handleMouseUp);
+      };
+
+      var showMap = function () {
+        map.classList.remove('map--faded');
+        generateAdvertisementMock();
+        doDomElements();
+        adForm.classList.remove('ad-form--disabled');
+        updateFormElementsState(formElements, false);
+      };
+
+      var writeCoordinates = function () {
+        var pinCoordinates = mapPinMain.getBoundingClientRect();
+        adFormAddress.value = Math.round(pinCoordinates.top + pageYOffset + 50) + '.' + Math.round(pinCoordinates.left + pageXOffset);
+      };
+
+      if (firstDiscovery) {
+        showMap();
+        firstDiscovery = false;
+      }
+
+      mapPinMain.addEventListener('mousemove', handleMouseMove);
+      mapPinMain.addEventListener('mouseup', handleMouseUp);
+      mapPinMain.addEventListener('mouseup', writeCoordinates);
+    });
+  };
+
   disablePage();
-  enablePage();
+  moveMapPinMain();
 
   adFormHousingType.addEventListener('change', syncHousingTypeAndPrice);
   adFormTimeIn.addEventListener('change', syncTimeInAndTimeOut);
