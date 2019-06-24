@@ -94,24 +94,24 @@
     }
   };
 
-  var movingMapPinMain = function () {
+  var moveMapPinMain = function () {
 
     mapPinMain.addEventListener('mousedown', function (evt) {
       var startCoords = {x: evt.clientX, y: evt.clientY};
 
-      var mouseMoveHandler = function (moveEvt) {
+      var handleMouseMove = function (moveEvt) {
         var shiftPinMain = {x: startCoords.x - moveEvt.clientX, y: startCoords.y - moveEvt.clientY};
         startCoords = {x: moveEvt.clientX, y: moveEvt.clientY};
         mapPinMain.style.top = (mapPinMain.offsetTop - shiftPinMain.y) + 'px';
         mapPinMain.style.left = (mapPinMain.offsetLeft - shiftPinMain.x) + 'px';
       };
 
-      var mouseUpHandler = function () {
-        mapPinMain.removeEventListener('mousemove', mouseMoveHandler);
-        mapPinMain.removeEventListener('mouseup', mouseUpHandler);
+      var handleMouseUp = function () {
+        mapPinMain.removeEventListener('mousemove', handleMouseMove);
+        mapPinMain.removeEventListener('mouseup', handleMouseUp);
       };
 
-      var showMapHandler = function () {
+      var showMap = function () {
         map.classList.remove('map--faded');
         generateAdvertisementMock();
         doDomElements();
@@ -119,24 +119,24 @@
         updateFormElementsState(formElements, false);
       };
 
-      var writeCoordinatesHandler = function () {
+      var writeCoordinates = function () {
         var pinCoordinates = mapPinMain.getBoundingClientRect();
         adFormAddress.value = Math.round(pinCoordinates.top + pageYOffset + 50) + '.' + Math.round(pinCoordinates.left + pageXOffset);
       };
 
       if (firstDiscovery) {
-        showMapHandler();
+        showMap();
         firstDiscovery = false;
       }
 
-      mapPinMain.addEventListener('mousemove', mouseMoveHandler);
-      mapPinMain.addEventListener('mouseup', mouseUpHandler);
-      mapPinMain.addEventListener('mouseup', writeCoordinatesHandler);
+      mapPinMain.addEventListener('mousemove', handleMouseMove);
+      mapPinMain.addEventListener('mouseup', handleMouseUp);
+      mapPinMain.addEventListener('mouseup', writeCoordinates);
     });
   };
 
   disablePage();
-  movingMapPinMain();
+  moveMapPinMain();
 
   adFormHousingType.addEventListener('change', syncHousingTypeAndPrice);
   adFormTimeIn.addEventListener('change', syncTimeInAndTimeOut);
