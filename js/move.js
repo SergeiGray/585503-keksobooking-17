@@ -25,7 +25,7 @@
 
       var showMap = function () {
         map.classList.remove('map--faded');
-        window.generateAdvertisementMock();
+        window.getAdvertisementData();
         window.doDomElements();
         window.adForm.classList.remove('ad-form--disabled');
         window.updateFormElementsState(window.formElements, false);

@@ -4,11 +4,13 @@
 
   var HOUSE_TYPE_MIN_PRICES = {'bungalo': 0, 'flat': 1000, 'house': 5000, 'palace': 10000};
 
+  window.adForm = document.querySelector('.ad-form');
   var adFormHousingType = window.adForm.querySelector('#type');
   var adFormPrice = window.adForm.querySelector('#price');
   var adFormTimeIn = window.adForm.querySelector('#timein');
   var adFormTimeOut = window.adForm.querySelector('#timeout');
 
+  window.formElements = [];
   var mapFilters = document.querySelector('.map__filters');
   var mapSelectFilters = mapFilters.querySelectorAll('select');
   var mapInputFilters = mapFilters.querySelectorAll('input');
@@ -16,6 +18,7 @@
   var mapSelectAdForm = window.adForm.querySelectorAll('select');
   var mapInputAdForm = window.adForm.querySelectorAll('input');
   var mapFieldsetAdForm = window.adForm.querySelectorAll('fieldset');
+
   window.formElements = [mapSelectFilters, mapInputFilters, mapFieldsetFilters, mapSelectAdForm, mapInputAdForm, mapFieldsetAdForm];
 
   window.updateFormElementsState = function (forms, isDisabled) {
