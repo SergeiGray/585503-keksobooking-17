@@ -2,9 +2,9 @@
 
 (function () {
 
-  var advertisements = window.getAdvertisementData();
+  window.mapPins = document.querySelector('.map__pins');
 
-  window.doDomElements = function () {
+  window.doDomElements = function (advertisements) {
     var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
     for (var i = 0; i < advertisements.length; i++) {

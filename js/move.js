@@ -3,8 +3,17 @@
 (function () {
 
   var map = document.querySelector('.map');
+  var mainBlock = document.querySelector('main');
   var mapPinMain = document.querySelector('.map__pin--main');
   var firstDiscovery = true;
+
+  var handleError = function () {
+    var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+    mainBlock.appendChild(similarErrorTemplate);
+    mainBlock.querySelector('.error__button').addEventListener('click', function () {
+      window.location.reload();
+    });
+  };
 
   var moveMapPinMain = function () {
 
@@ -25,7 +34,7 @@
 
       var showMap = function () {
         map.classList.remove('map--faded');
-        window.doDomElements();
+        window.loadData(window.doDomElements, handleError);
         window.adForm.classList.remove('ad-form--disabled');
         window.updateFormElementsState(window.formElements, false);
       };
