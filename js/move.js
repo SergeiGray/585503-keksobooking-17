@@ -34,7 +34,7 @@
 
       var showMap = function () {
         map.classList.remove('map--faded');
-        window.upload('https://js.dump.academy/keksobooking/data', window.doDomElements, handleError);
+        window.loadData(window.doDomElements, handleError);
         window.adForm.classList.remove('ad-form--disabled');
         window.updateFormElementsState(window.formElements, false);
       };

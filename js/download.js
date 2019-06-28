@@ -1,13 +1,14 @@
 'use strict';
 
 (function () {
+  var URL_FOR_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
 
-  window.upload = function (url, onSuccess, onError) {
+  window.loadData = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
 
-    xhr.open('GET', url);
+    xhr.open('GET', URL_FOR_DOWNLOAD);
     xhr.send();
 
     xhr.addEventListener('load', function () {
