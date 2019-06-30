@@ -2,6 +2,7 @@
 
 (function () {
   var URL_FOR_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
+  window.housingType = document.querySelector('#housing-type');
 
   window.loadData = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
@@ -13,7 +14,10 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        onSuccess(xhr.response);
+        if (window.housingType.value === 'any') {
+          onSuccess(xhr.response.slice(0, 5));
+        }
+        onSuccess(xhr.response.filter(window.filterOfType).slice(0, 5));
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }

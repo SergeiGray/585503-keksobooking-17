@@ -12,6 +12,7 @@
       pinElement.setAttribute('style', 'left: ' + advertisements[i].location.x + 'px; ' + 'top: ' + advertisements[i].location.y + 'px; ');
       pinElement.querySelector('img').setAttribute('src', advertisements[i].author.avatar);
       pinElement.querySelector('img').setAttribute('alt', advertisements[i].offer.title);
+      pinElement.classList.add('map__pin_filter');
 
       window.mapPins.appendChild(pinElement);
     }
