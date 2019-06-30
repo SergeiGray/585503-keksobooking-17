@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var URL_FOR_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
   window.housingType = document.querySelector('#housing-type');
 
