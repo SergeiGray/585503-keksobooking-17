@@ -7,7 +7,7 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var firstDiscovery = true;
 
-  var handleError = function () {
+  window.handleError = function () {
     var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
     mainBlock.appendChild(similarErrorTemplate);
     mainBlock.querySelector('.error__button').addEventListener('click', function () {
@@ -34,7 +34,7 @@
 
       var showMap = function () {
         map.classList.remove('map--faded');
-        window.loadData(window.doDomElements, handleError);
+        window.loadData(window.doDomElements, window.handleError);
         window.adForm.classList.remove('ad-form--disabled');
         window.updateFormElementsState(window.formElements, false);
       };
