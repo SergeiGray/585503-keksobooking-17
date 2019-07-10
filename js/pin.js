@@ -13,6 +13,9 @@
       pinElement.querySelector('img').setAttribute('src', advertisements[i].author.avatar);
       pinElement.querySelector('img').setAttribute('alt', advertisements[i].offer.title);
       pinElement.classList.add('map__pin_filter');
+      pinElement.setAttribute('data-address', advertisements[i].offer.address);
+
+      window.showPopUp(pinElement);
 
       window.mapPins.appendChild(pinElement);
     }

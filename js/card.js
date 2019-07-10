@@ -2,15 +2,13 @@
 
 (function () {
 
-  window.mapCards = document.querySelector('.map__pins');
-
   window.doDomElementsCard = function (advertisements) {
     var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
     for (var i = 0; i < advertisements.length; i++) {
       var cardElement = similarCardTemplate.cloneNode(true);
 
-      cardElement.setAttribute('style', 'left: ' + 20 * i + '%; top: ' + 10 * i + '%;');
+      cardElement.setAttribute('style', 'left: 20%; top: 20%;');
       cardElement.querySelector('.popup__title').innerText = advertisements[i].offer.title;
       cardElement.querySelector('.popup__text--address').innerText = advertisements[i].offer.address;
       cardElement.querySelector('.popup__text--price').innerText = advertisements[i].offer.price + '₽/ночь';
@@ -51,8 +49,9 @@
         cardElement.querySelector('.popup__photos').appendChild(photoDomElement);
       }
       cardElement.querySelector('.popup__photos').firstElementChild.remove();
+      cardElement.setAttribute('style', 'display: none;');
 
-      window.mapCards.appendChild(cardElement);
+      window.mapPins.appendChild(cardElement);
     }
   };
 
