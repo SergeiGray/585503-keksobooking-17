@@ -35,6 +35,7 @@
       var showMap = function () {
         map.classList.remove('map--faded');
         window.loadData(window.doDomElements, window.handleError);
+        window.loadData(window.doDomElementsCard, window.handleError);
         window.adForm.classList.remove('ad-form--disabled');
         window.updateFormElementsState(window.formElements, false);
       };
