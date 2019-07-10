@@ -11,6 +11,7 @@
       elem.parentNode.removeChild(elem);
     });
     window.loadData(window.doDomElements, window.handleError);
+    window.loadData(window.doDomElementsCard, window.handleError);
   });
 
 }());
