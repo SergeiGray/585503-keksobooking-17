@@ -9,6 +9,9 @@
   var adFormPrice = window.adForm.querySelector('#price');
   var adFormTimeIn = window.adForm.querySelector('#timein');
   var adFormTimeOut = window.adForm.querySelector('#timeout');
+  var adFormRoomNumber = window.adForm.querySelector('#room_number');
+  var adFormRoomCapacity = window.adForm.querySelector('#capacity');
+  var adFormRoomCapacityNumbers = Array.from(adFormRoomCapacity.children);
 
   window.formElements = [];
   var mapFilters = document.querySelector('.map__filters');
@@ -47,10 +50,49 @@
     }
   };
 
+  var addingRoomCapacityAttribute = function (num) {
+    adFormRoomCapacityNumbers.forEach(function (elem) {
+      if (elem.value <= num && elem.value > 0) {
+        elem.removeAttribute('disabled');
+      } else {
+        elem.setAttribute('disabled', '');
+      }
+      if (elem.hasAttribute('selected')) {
+        (adFormRoomCapacity.value = elem.value);
+      }
+    });
+  };
+
+  var syncRoomsAndGuests = function (evt) {
+    switch (evt.target.value) {
+      case '1':
+        addingRoomCapacityAttribute('1');
+        break;
+      case '2':
+        addingRoomCapacityAttribute('2');
+        break;
+      case '3':
+        addingRoomCapacityAttribute('3');
+        break;
+      case '100':
+        adFormRoomCapacityNumbers.forEach(function (elem) {
+          elem.setAttribute('disabled', '');
+          adFormRoomCapacity.value = '0';
+        });
+        break;
+      default:
+        adFormRoomCapacityNumbers.forEach(function (elem) {
+          elem.removeAttribute('disabled');
+        });
+        break;
+    }
+  };
+
   disablePage();
 
   adFormHousingType.addEventListener('change', syncHousingTypeAndPrice);
   adFormTimeIn.addEventListener('change', syncTimeInAndTimeOut);
   adFormTimeOut.addEventListener('change', syncTimeInAndTimeOut);
+  adFormRoomNumber.addEventListener('change', syncRoomsAndGuests);
 
 })();
