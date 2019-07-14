@@ -88,11 +88,17 @@
     }
   };
 
+  var forwardingAdForm = function (evt) {
+    evt.preventDefault();
+    window.uploadData(window.adForm);
+  };
+
   disablePage();
 
   adFormHousingType.addEventListener('change', syncHousingTypeAndPrice);
   adFormTimeIn.addEventListener('change', syncTimeInAndTimeOut);
   adFormTimeOut.addEventListener('change', syncTimeInAndTimeOut);
   adFormRoomNumber.addEventListener('change', syncRoomsAndGuests);
+  window.adForm.addEventListener('submit', forwardingAdForm);
 
 })();

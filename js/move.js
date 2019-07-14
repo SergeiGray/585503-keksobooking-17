@@ -54,6 +54,7 @@
       mapPinMain.addEventListener('mouseup', handleMouseUp);
       mapPinMain.addEventListener('mouseup', writeCoordinates);
     });
+
   };
 
   moveMapPinMain();
