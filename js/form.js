@@ -51,9 +51,15 @@
   };
 
   var addingRoomCapacityAttribute = function (num) {
-    adFormRoomCapacityNumbers.forEach( function (elem) {
-      elem.value <= num && elem.value > 0 ? elem.removeAttribute('disabled') : elem.setAttribute('disabled', '');
-      elem.hasAttribute('selected') ? adFormRoomCapacity.value = elem.value : false ;
+    adFormRoomCapacityNumbers.forEach(function (elem) {
+      if (elem.value <= num && elem.value > 0) {
+        elem.removeAttribute('disabled');
+      } else {
+        elem.setAttribute('disabled', '');
+      }
+      if (elem.hasAttribute('selected')) {
+        (adFormRoomCapacity.value = elem.value);
+      }
     });
   };
 
@@ -69,18 +75,18 @@
         addingRoomCapacityAttribute('3');
         break;
       case '100':
-        adFormRoomCapacityNumbers.forEach( function (elem) {
+        adFormRoomCapacityNumbers.forEach(function (elem) {
           elem.setAttribute('disabled', '');
           adFormRoomCapacity.value = '0';
         });
         break;
       default:
-        adFormRoomCapacityNumbers.forEach( function (elem) {
+        adFormRoomCapacityNumbers.forEach(function (elem) {
           elem.removeAttribute('disabled');
         });
         break;
     }
-  }
+  };
 
   disablePage();
 
