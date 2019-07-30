@@ -3,27 +3,37 @@
 (function () {
 
   var URL_FOR_UPLOAD = 'https://js.dump.academy/keksobooking';
+  var ESC_KEYCODE = 27;
   var success = document.querySelector('#success').content.querySelector('.success');
   var error = document.querySelector('#error').content.querySelector('.error');
   var mainField = document.querySelector('#main');
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var startCoords = {x: mapPinMain.style.top, y: mapPinMain.style.left};
+  var formFilters = document.querySelector('.map__filters');
+  var pageReset = document.querySelector('.ad-form__reset');
+  var message;
+  var formSubmitButton = document.querySelector('.ad-form__submit');
+
+  var clickHandler = function () {
+    mainField.removeChild(message);
+    document.removeEventListener('click', clickHandler);
+    document.removeEventListener('keydown', keydownHandler);
+  };
+
+  var keydownHandler = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      mainField.removeChild(message);
+      document.removeEventListener('keydown', keydownHandler);
+      document.removeEventListener('click', clickHandler);
+    }
+  };
 
   var conditionMessage = function (status) {
-    var ESC_KEYCODE = 27;
-    var message = status.cloneNode(true);
+    message = status.cloneNode(true);
     mainField.appendChild(message);
-    var clickHandler = function () {
-      mainField.removeChild(message);
-      document.removeEventListener('click', clickHandler);
-    };
-    var keydownHandler = function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        mainField.removeChild(message);
-        document.removeEventListener('keydown', keydownHandler);
-      }
-    };
+    formSubmitButton.blur();
+
     document.addEventListener('click', clickHandler);
     document.addEventListener('keydown', keydownHandler);
   };
@@ -43,6 +53,7 @@
     deletElement('.map__pin_filter');
     deletElement('.map__card');
 
+    formFilters.reset();
     window.adForm.reset();
     window.adForm.classList.add('ad-form--disabled');
     window.updateFormElementsState(window.formElements, true);
@@ -74,7 +85,8 @@
     xhr.addEventListener('timeout', function () {
       conditionMessage(error);
     });
-
   };
+
+  pageReset.addEventListener('click', resetToInitialState);
 
 }());

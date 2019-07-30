@@ -14,19 +14,7 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-
-
         onSuccess(xhr.response);
-
-// onSuccess(xhr.response.filter(window.filtration));
-
-        // console.log(xhr.response);       ///////////////////////////
-
-        // if (window.housingType.value === 'any') {
-        //   onSuccess(xhr.response.slice(0, 5));
-        // } else {
-        //   onSuccess(xhr.response.filter(window.filterOfType).slice(0, 5));
-        // }
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }

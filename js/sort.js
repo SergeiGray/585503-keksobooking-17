@@ -4,12 +4,11 @@
 
   var form = document.querySelector('.map__filters');
 
+  var sortPins = function () {
 
-  var sortPins = function() {
+    form.addEventListener('change', function () {
 
-    form.addEventListener('change', function(evt) {
-
-      var pinsInfiltrated = window.pins.filter(function(pin) {
+      var pinsInfiltrated = window.pins.filter(function (pin) {
 
         var type = form.elements['housing-type'].value;
         var price = form.elements['housing-price'].value;
@@ -18,65 +17,55 @@
         var fieldset = form.elements['housing-features'];
         var features = [];
         var isEqual = function (value) {
-          return this.includes(value);
+          return pin.offer.features.includes(value);
         };
 
         for (var i = 0; i < fieldset.elements.length; i++) {
-          if ( fieldset.elements[i].checked ) {
+          if (fieldset.elements[i].checked) {
             features.push(fieldset.elements[i].value);
-          };
-        };
+          }
+        }
 
-
-        if( type === pin.offer.type || type === 'any' ) {
-        } else {
+        if (!(type === pin.offer.type || type === 'any')) {
           return false;
-        };
+        }
 
         switch (price) {
           case 'middle':
-            if( pin.offer.price >= 10000 && pin.offer.price < 50000 ) {
-              break;
-            } else {
+            if (!(pin.offer.price >= 10000 && pin.offer.price < 50000)) {
               return false;
-            };
+            }
+            break;
           case 'low':
-            if( pin.offer.price < 10000 ) {
-              break;
-            } else {
+            if (!(pin.offer.price < 10000)) {
               return false;
-            };
+            }
+            break;
           case 'high':
-            if( pin.offer.price >= 50000 ) {
-              break;
-            } else {
+            if (!(pin.offer.price >= 50000)) {
               return false;
-            };
+            }
+            break;
           case 'any':
             break;
-        };
+        }
 
-        if(rooms === String(pin.offer.rooms) || rooms === 'any' ) {
-        } else {
+        if (!(rooms === String(pin.offer.rooms) || rooms === 'any')) {
           return false;
-        };
+        }
 
-        if( guests === String(pin.offer.guests) ||  guests === 'any' ) {
-        } else {
+        if (!(guests === String(pin.offer.guests) || guests === 'any')) {
           return false;
-        };
+        }
 
-        if ( features.length === 0 || features.length <= pin.offer.features.length && features.every( isEqual, pin.offer.features )) {
-        } else {
+        if (!(features.length === 0 || features.length <= pin.offer.features.length && features.every(isEqual))) {
           return false;
-        };
-
-
+        }
 
         return true;
       });
 
-      var updatePins = function() {
+      var updatePins = function () {
         Array.from(document.querySelectorAll('.map__pin_filter')).forEach(function (elem) {
           elem.parentNode.removeChild(elem);
         });
@@ -93,6 +82,6 @@
     });
   };
 
-sortPins();
+  sortPins();
 
 }());

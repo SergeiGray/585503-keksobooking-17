@@ -4,15 +4,14 @@
 
   window.showPopUp = function (pin) {
 
-    var handlePinClick = function (evt) {
+    var handlePinClick = function () {
       var ESC_KEYCODE = 27;
       var cards = document.querySelectorAll('.popup__text--address');
       var pins = document.querySelectorAll('.map__pin_filter');
-      var pin = evt.currentTarget;
       var pinAddress = pin.dataset.address;
 
-      pins.forEach(function (pin) {
-        pin.classList.remove('map__pin--active');
+      pins.forEach(function (elem) {
+        elem.classList.remove('map__pin--active');
       });
 
       cards.forEach(function (card) {
