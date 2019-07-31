@@ -29,7 +29,7 @@
     }
   };
 
-  var conditionMessage = function (status) {
+  var getConditionMessage = function (status) {
     message = status.cloneNode(true);
     mainField.appendChild(message);
     formSubmitButton.blur();
@@ -57,6 +57,7 @@
     window.adForm.reset();
     window.adForm.classList.add('ad-form--disabled');
     window.updateFormElementsState(window.formElements, true);
+    window.updateFormElementsState(window.formElementsSort, true);
   };
 
   window.uploadData = function (form) {
@@ -70,20 +71,20 @@
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         resetToInitialState();
-        conditionMessage(success);
+        getConditionMessage(success);
       } else {
-        conditionMessage(error);
+        getConditionMessage(error);
       }
     });
 
     xhr.addEventListener('error', function () {
-      conditionMessage(error);
+      getConditionMessage(error);
     });
 
     xhr.timeout = 10000;
 
     xhr.addEventListener('timeout', function () {
-      conditionMessage(error);
+      getConditionMessage(error);
     });
   };
 

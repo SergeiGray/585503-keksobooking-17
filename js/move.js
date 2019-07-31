@@ -19,7 +19,7 @@
 
   var writeCoordinates = function () {
     var pinCoordinates = mapPinMain.getBoundingClientRect();
-    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + 50) + '.' + Math.round(pinCoordinates.left + pageXOffset + 30);
+    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + 50) + ', ' + Math.round(pinCoordinates.left + pageXOffset + 30);
   };
 
   window.handleError = function () {
@@ -71,8 +71,7 @@
       mapPinMain.style.left = coordsX + 'px';
     };
 
-    var handleMouseUp = function (upEvt) {
-      upEvt.preventDefault();
+    var handleMouseUp = function () {
 
       writeCoordinates();
 
@@ -81,8 +80,6 @@
     };
 
     var handelMouseDown = function (evt) {
-
-      evt.preventDefault();
 
       startCoords = {x: evt.clientX, y: evt.clientY};
 
@@ -111,8 +108,6 @@
 
     mapPinMain.addEventListener('mousedown', handelMouseDown);
     mapPinMain.addEventListener('keydown', handleKeyDown);
-
-
   };
 
 

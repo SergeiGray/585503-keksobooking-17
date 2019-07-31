@@ -14,6 +14,7 @@
   var adFormRoomCapacityNumbers = Array.from(adFormRoomCapacity.children);
 
   window.formElements = [];
+  window.formElementsSort = [];
   var mapFilters = document.querySelector('.map__filters');
   var mapSelectFilters = mapFilters.querySelectorAll('select');
   var mapInputFilters = mapFilters.querySelectorAll('input');
@@ -22,7 +23,8 @@
   var mapInputAdForm = window.adForm.querySelectorAll('input');
   var mapFieldsetAdForm = window.adForm.querySelectorAll('fieldset');
 
-  window.formElements = [mapSelectFilters, mapInputFilters, mapFieldsetFilters, mapSelectAdForm, mapInputAdForm, mapFieldsetAdForm];
+  window.formElements = [mapSelectAdForm, mapInputAdForm, mapFieldsetAdForm];
+  window.formElementsSort = [mapSelectFilters, mapInputFilters, mapFieldsetFilters];
 
   window.updateFormElementsState = function (forms, isDisabled) {
     for (var i = 0; i < forms.length; i++) {
@@ -30,11 +32,11 @@
         forms[i][j].disabled = isDisabled;
       }
     }
-
   };
 
   var disablePage = function () {
     window.updateFormElementsState(window.formElements, true);
+    window.updateFormElementsState(window.formElementsSort, true);
   };
 
   var syncHousingTypeAndPrice = function (evt) {

@@ -14,11 +14,12 @@
       pinElement.querySelector('img').setAttribute('alt', advertisements[i].offer.title);
       pinElement.classList.add('map__pin_filter');
       pinElement.setAttribute('data-address', advertisements[i].offer.address);
-      pinElement.setAttribute('data-type', advertisements[i].offer.type);
-      pinElement.setAttribute('data-price', advertisements[i].offer.price);
-      pinElement.setAttribute('data-rooms', advertisements[i].offer.rooms);
-      pinElement.setAttribute('data-guests', advertisements[i].offer.guests);
-      pinElement.setAttribute('data-features', advertisements[i].offer.features);
+      // pinElement.setAttribute('data-type', advertisements[i].offer.type);
+      // pinElement.setAttribute('data-price', advertisements[i].offer.price);
+      // pinElement.setAttribute('data-rooms', advertisements[i].offer.rooms);
+      // pinElement.setAttribute('data-guests', advertisements[i].offer.guests);
+      // pinElement.setAttribute('data-features', advertisements[i].offer.features);
+      pinElement.setAttribute('data-title', advertisements[i].offer.title);
 
       window.showPopUp(pinElement);
 

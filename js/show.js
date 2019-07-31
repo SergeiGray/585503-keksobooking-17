@@ -9,32 +9,49 @@
       var cards = document.querySelectorAll('.popup__text--address');
       var pins = document.querySelectorAll('.map__pin_filter');
       var pinAddress = pin.dataset.address;
+      var clickEvent = new Event('click');
+      var keydownEvent = new KeyboardEvent('keydown');
+      keydownEvent.initKeyEvent('keydown', true, true, null, false, false, false, false, 27, 0);
 
       pins.forEach(function (elem) {
         elem.classList.remove('map__pin--active');
       });
 
-      cards.forEach(function (card) {
-        card.parentElement.setAttribute('style', 'display: none;');
-      });
-
       pin.classList.add('map__pin--active');
+      document.dispatchEvent(keydownEvent);
 
-      cards.forEach(function (card) {
-        if (pinAddress === card.innerText) {
-          var cardBlock = card.parentElement;
-          var cardBlockClose = cardBlock.querySelector('.popup__close');
-          cardBlock.setAttribute('style', 'display: block;');
-          cardBlockClose.addEventListener('click', function () {
-            cardBlock.setAttribute('style', 'display: none;');
+      cards.forEach(function (elem) {
+        var card = elem.parentElement;
+        var cardClose = card.querySelector('.popup__close');
+
+        var handleKeyDownClose = function (key) {
+          if (key.keyCode === ESC_KEYCODE) {
+
+            card.setAttribute('style', 'display: none;');
             pin.classList.remove('map__pin--active');
-          });
-          document.addEventListener('keydown', function (key) {
-            if (key.keyCode === ESC_KEYCODE) {
-              cardBlock.setAttribute('style', 'display: none;');
-              pin.classList.remove('map__pin--active');
-            }
-          });
+
+            document.removeEventListener('keydown', handleKeyDownClose);
+            cardClose.removeEventListener('click', handleClickClose);
+          }
+        };
+
+        var handleClickClose = function () {
+
+          card.setAttribute('style', 'display: none;');
+          pin.classList.remove('map__pin--active');
+
+          cardClose.removeEventListener('click', handleClickClose);
+          document.removeEventListener('keydown', handleKeyDownClose);
+        };
+
+        card.setAttribute('style', 'display: none;');
+        cardClose.dispatchEvent(clickEvent);
+
+
+        if (pinAddress === elem.innerText) {
+          card.setAttribute('style', 'display: block;');
+          cardClose.addEventListener('click', handleClickClose);
+          document.addEventListener('keydown', handleKeyDownClose);
         }
       });
     };

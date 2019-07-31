@@ -15,6 +15,10 @@
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         onSuccess(xhr.response);
+        window.updateFormElementsState(window.formElementsSort, false);
+
+        console.log(xhr.response);
+
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
