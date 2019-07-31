@@ -52,7 +52,7 @@
     }
   };
 
-  var addingRoomCapacityAttribute = function (num) {
+  window.addingRoomCapacityAttribute = function (num) {
     adFormRoomCapacityNumbers.forEach(function (elem) {
       if (elem.value <= num && elem.value > 0) {
         elem.removeAttribute('disabled');
@@ -68,13 +68,13 @@
   var syncRoomsAndGuests = function (evt) {
     switch (evt.target.value) {
       case '1':
-        addingRoomCapacityAttribute('1');
+        window.addingRoomCapacityAttribute('1');
         break;
       case '2':
-        addingRoomCapacityAttribute('2');
+        window.addingRoomCapacityAttribute('2');
         break;
       case '3':
-        addingRoomCapacityAttribute('3');
+        window.addingRoomCapacityAttribute('3');
         break;
       case '100':
         adFormRoomCapacityNumbers.forEach(function (elem) {
@@ -102,5 +102,11 @@
   adFormTimeOut.addEventListener('change', syncTimeInAndTimeOut);
   adFormRoomNumber.addEventListener('change', syncRoomsAndGuests);
   window.adForm.addEventListener('submit', forwardingAdForm);
+
+  var button = document.querySelector('.ad-form__photo');
+  var select = document.querySelector('#capacity');
+  button.addEventListener('click', function () {
+    select.reset();
+  });
 
 })();

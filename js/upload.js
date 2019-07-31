@@ -13,6 +13,7 @@
   var formFilters = document.querySelector('.map__filters');
   var pageReset = document.querySelector('.ad-form__reset');
   var message;
+  var adFormPrice = window.adForm.querySelector('#price');
   var formSubmitButton = document.querySelector('.ad-form__submit');
 
   var clickHandler = function () {
@@ -38,7 +39,10 @@
     document.addEventListener('keydown', keydownHandler);
   };
 
-  var resetToInitialState = function () {
+  var resetToInitialState = function (evt) {
+    if (evt !== undefined) {
+      evt.preventDefault();
+    }
 
     var deletElement = function (ident) {
       document.querySelectorAll(ident).forEach(function (elem) {
@@ -58,6 +62,10 @@
     window.adForm.classList.add('ad-form--disabled');
     window.updateFormElementsState(window.formElements, true);
     window.updateFormElementsState(window.formElementsSort, true);
+    window.writeCoordinatesInactive();
+    window.addingRoomCapacityAttribute('1');
+    adFormPrice.setAttribute('min', 1000);
+    adFormPrice.setAttribute('placeholder', 5000);
   };
 
   window.uploadData = function (form) {

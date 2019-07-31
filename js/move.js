@@ -17,10 +17,19 @@
     window.updateFormElementsState(window.formElements, false);
   };
 
-  var writeCoordinates = function () {
+  window.writeCoordinatesInactive = function () {
     var pinCoordinates = mapPinMain.getBoundingClientRect();
-    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + 50) + ', ' + Math.round(pinCoordinates.left + pageXOffset + 30);
+    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + 32) + ', ' + Math.round(pinCoordinates.left + pageXOffset + 32);
   };
+
+  var writeCoordinatesActive = function () {
+    var pinCoordinates = mapPinMain.getBoundingClientRect();
+    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + 70) + ', ' + Math.round(pinCoordinates.left + pageXOffset + 32);
+  };
+
+  if (map.classList.contains('map--faded')) {
+    window.writeCoordinatesInactive();
+  }
 
   window.handleError = function () {
     var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
@@ -39,21 +48,22 @@
   var moveMapPinMain = function () {
 
     var handleMouseMove = function (moveEvt) {
-      moveEvt.preventDefault();
 
       var shiftPinMain = {x: startCoords.x - moveEvt.clientX, y: startCoords.y - moveEvt.clientY};
       startCoords = {x: moveEvt.clientX, y: moveEvt.clientY};
       var coordsY = mapPinMain.offsetTop - shiftPinMain.y;
+      var coordsYMin = 130;
+      var coordsYMax = 630;
       var coordsX = mapPinMain.offsetLeft - shiftPinMain.x;
       var coordsXMin = 0;
       var coordsXMax = mainBlock.offsetWidth - mapPinMain.offsetWidth;
 
       switch (true) {
-        case (coordsY < 130):
-          coordsY = 130;
+        case (coordsY < coordsYMin):
+          coordsY = coordsYMin;
           break;
-        case (coordsY > 630):
-          coordsY = 630;
+        case (coordsY > coordsYMax):
+          coordsY = coordsYMax;
           break;
       }
 
@@ -73,7 +83,7 @@
 
     var handleMouseUp = function () {
 
-      writeCoordinates();
+      writeCoordinatesActive();
 
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
