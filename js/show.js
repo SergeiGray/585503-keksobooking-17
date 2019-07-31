@@ -6,9 +6,9 @@
 
     var handlePinClick = function () {
       var ESC_KEYCODE = 27;
-      var cards = document.querySelectorAll('.popup__text--address');
+      var cards = document.querySelectorAll('.popup__title');
       var pins = document.querySelectorAll('.map__pin_filter');
-      var pinAddress = pin.dataset.address;
+      var pinTitle = pin.dataset.title;
       var clickEvent = new Event('click');
       var keydownEvent = new KeyboardEvent('keydown');
       keydownEvent.initKeyEvent('keydown', true, true, null, false, false, false, false, 27, 0);
@@ -47,8 +47,7 @@
         card.setAttribute('style', 'display: none;');
         cardClose.dispatchEvent(clickEvent);
 
-
-        if (pinAddress === elem.innerText) {
+        if (pinTitle === elem.innerText) {
           card.setAttribute('style', 'display: block;');
           cardClose.addEventListener('click', handleClickClose);
           document.addEventListener('keydown', handleKeyDownClose);
