@@ -5,6 +5,18 @@
   var form = document.querySelector('.map__filters');
 
   var sortPins = function () {
+    var PRICE_RANGE = {
+      'middle': {
+        'min': 10000,
+        'max': 50000
+      },
+      'low': {
+        'max': 10000
+      },
+      'high': {
+        'min': 50000
+      }
+    };
 
     form.addEventListener('change', function () {
 
@@ -32,17 +44,17 @@
 
         switch (price) {
           case 'middle':
-            if (!(pin.offer.price >= 10000 && pin.offer.price < 50000)) {
+            if (!(pin.offer.price >= PRICE_RANGE.middle.min && pin.offer.price < PRICE_RANGE.middle.max)) {
               return false;
             }
             break;
           case 'low':
-            if (!(pin.offer.price < 10000)) {
+            if (!(pin.offer.price < PRICE_RANGE.low.max)) {
               return false;
             }
             break;
           case 'high':
-            if (!(pin.offer.price >= 50000)) {
+            if (!(pin.offer.price >= PRICE_RANGE.high.min)) {
               return false;
             }
             break;
@@ -73,8 +85,8 @@
           elem.parentNode.removeChild(elem);
         });
 
-        window.doDomElements(pinsInfiltrated.slice(0, 5));
-        window.doDomElementsCard(pinsInfiltrated.slice(0, 5));
+        window.doDomElements(pinsInfiltrated.slice(0, window.NUMBER_OF_PINS));
+        window.doDomElementsCard(pinsInfiltrated.slice(0, window.NUMBER_OF_PINS));
       };
 
       window.debounce(updatePins);

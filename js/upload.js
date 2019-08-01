@@ -4,6 +4,11 @@
 
   var URL_FOR_UPLOAD = 'https://js.dump.academy/keksobooking';
   var ESC_KEYCODE = 27;
+  var TIMEOUT = 10000;
+  var SUCCESSFUL_UPLOAD = 200;
+  var INITIAL_VALUE_MIN_PRICE = 1000;
+  var INITIAL_VALUE_PLACEHOLDER_PRICE = 5000;
+  var INITIAL_VALUE_ROOM_CAPACITY = '1';
   var success = document.querySelector('#success').content.querySelector('.success');
   var error = document.querySelector('#error').content.querySelector('.error');
   var mainField = document.querySelector('#main');
@@ -63,9 +68,9 @@
     window.updateFormElementsState(window.formElements, true);
     window.updateFormElementsState(window.formElementsSort, true);
     window.writeCoordinatesInactive();
-    window.addingRoomCapacityAttribute('1');
-    adFormPrice.setAttribute('min', 1000);
-    adFormPrice.setAttribute('placeholder', 5000);
+    window.addingRoomCapacityAttribute(INITIAL_VALUE_ROOM_CAPACITY);
+    adFormPrice.setAttribute('min', INITIAL_VALUE_MIN_PRICE);
+    adFormPrice.setAttribute('placeholder', INITIAL_VALUE_PLACEHOLDER_PRICE);
   };
 
   window.uploadData = function (form) {
@@ -77,7 +82,7 @@
     xhr.send(formData);
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === SUCCESSFUL_UPLOAD) {
         resetToInitialState();
         getConditionMessage(success);
       } else {
@@ -89,7 +94,7 @@
       getConditionMessage(error);
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = TIMEOUT;
 
     xhr.addEventListener('timeout', function () {
       getConditionMessage(error);

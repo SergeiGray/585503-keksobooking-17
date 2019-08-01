@@ -3,9 +3,17 @@
 (function () {
 
   var ENTER_KEYCODE = 13;
+  var COORDS_Y_MIN = 130;
+  var COORDS_Y_MAX = 630;
+  var COORDS_X_MIN = 0;
+  var PIN_ARROW_HEIGHT = 15;
+  window.NUMBER_OF_PINS = 5;
   var map = document.querySelector('.map');
   var mainBlock = document.querySelector('main');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var coordsXMax = mainBlock.offsetWidth - mapPinMain.offsetWidth;
+  var pinWidth = mapPinMain.offsetWidth;
+  var pinHeight = mapPinMain.offsetHeight;
   window.pins = [];
   var startCoords = {};
 
@@ -19,12 +27,12 @@
 
   window.writeCoordinatesInactive = function () {
     var pinCoordinates = mapPinMain.getBoundingClientRect();
-    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + 32) + ', ' + Math.round(pinCoordinates.left + pageXOffset + 32);
+    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + (pinHeight / 2)) + ', ' + Math.round(pinCoordinates.left + pageXOffset + (pinWidth / 2));
   };
 
   var writeCoordinatesActive = function () {
     var pinCoordinates = mapPinMain.getBoundingClientRect();
-    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + 70) + ', ' + Math.round(pinCoordinates.left + pageXOffset + 32);
+    window.adForm.querySelector('#address').value = Math.round(pinCoordinates.top + pageYOffset + pinHeight + PIN_ARROW_HEIGHT) + ', ' + Math.round(pinCoordinates.left + pageXOffset + (pinWidth / 2));
   };
 
   if (map.classList.contains('map--faded')) {
@@ -41,8 +49,8 @@
 
   var successHandler = function (data) {
     window.pins = data;
-    window.doDomElements(window.pins.slice(0, 5));
-    window.doDomElementsCard(window.pins.slice(0, 5));
+    window.doDomElements(window.pins.slice(0, window.NUMBER_OF_PINS));
+    window.doDomElementsCard(window.pins.slice(0, window.NUMBER_OF_PINS));
   };
 
   var moveMapPinMain = function () {
@@ -52,24 +60,22 @@
       var shiftPinMain = {x: startCoords.x - moveEvt.clientX, y: startCoords.y - moveEvt.clientY};
       startCoords = {x: moveEvt.clientX, y: moveEvt.clientY};
       var coordsY = mapPinMain.offsetTop - shiftPinMain.y;
-      var coordsYMin = 130;
-      var coordsYMax = 630;
+
       var coordsX = mapPinMain.offsetLeft - shiftPinMain.x;
-      var coordsXMin = 0;
-      var coordsXMax = mainBlock.offsetWidth - mapPinMain.offsetWidth;
+
 
       switch (true) {
-        case (coordsY < coordsYMin):
-          coordsY = coordsYMin;
+        case (coordsY < COORDS_Y_MIN):
+          coordsY = COORDS_Y_MIN;
           break;
-        case (coordsY > coordsYMax):
-          coordsY = coordsYMax;
+        case (coordsY > COORDS_Y_MAX):
+          coordsY = COORDS_Y_MAX;
           break;
       }
 
       switch (true) {
-        case (coordsX < coordsXMin):
-          coordsX = coordsXMin;
+        case (coordsX < COORDS_X_MIN):
+          coordsX = COORDS_X_MIN;
           break;
         case (coordsX > coordsXMax):
           coordsX = coordsXMax;
