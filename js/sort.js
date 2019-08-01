@@ -20,11 +20,11 @@
           return pin.offer.features.includes(value);
         };
 
-        for (var i = 0; i < fieldset.elements.length; i++) {
-          if (fieldset.elements[i].checked) {
-            features.push(fieldset.elements[i].value);
+        Array.from(fieldset.elements).forEach(function (elem) {
+          if (elem.checked) {
+            features.push(elem.value);
           }
-        }
+        });
 
         if (!(type === pin.offer.type || type === 'any')) {
           return false;

@@ -27,11 +27,11 @@
   window.formElementsSort = [mapSelectFilters, mapInputFilters, mapFieldsetFilters];
 
   window.updateFormElementsState = function (forms, isDisabled) {
-    for (var i = 0; i < forms.length; i++) {
-      for (var j = 0; j < forms[i].length; j++) {
-        forms[i][j].disabled = isDisabled;
-      }
-    }
+    forms.forEach(function (form) {
+      form.forEach(function (elem) {
+        elem.disabled = isDisabled;
+      });
+    });
   };
 
   var disablePage = function () {
