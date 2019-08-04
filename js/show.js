@@ -10,8 +10,9 @@
       var pins = document.querySelectorAll('.map__pin_filter');
       var pinTitle = pin.dataset.title;
       var clickEvent = new Event('click');
-      var keydownEvent = new KeyboardEvent('keydown');
-      keydownEvent.initKeyEvent('keydown', true, true, null, false, false, false, false, 27, 0);
+      var keydownEvent = new KeyboardEvent('keydown', {
+        code: '27',
+      });
 
       pins.forEach(function (elem) {
         elem.classList.remove('map__pin--active');

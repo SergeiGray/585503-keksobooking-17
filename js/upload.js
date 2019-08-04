@@ -74,7 +74,6 @@
   };
 
   window.uploadData = function (form) {
-
     var formData = new FormData(form);
     var xhr = new XMLHttpRequest();
 

@@ -103,10 +103,4 @@
   adFormRoomNumber.addEventListener('change', syncRoomsAndGuests);
   window.adForm.addEventListener('submit', forwardingAdForm);
 
-  var button = document.querySelector('.ad-form__photo');
-  var select = document.querySelector('#capacity');
-  button.addEventListener('click', function () {
-    select.reset();
-  });
-
 })();
